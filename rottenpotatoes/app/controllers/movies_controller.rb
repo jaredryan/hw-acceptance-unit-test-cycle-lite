@@ -55,15 +55,20 @@ class MoviesController < ApplicationController
   end
 
   def destroy
-    @movie = Movie.find(params[:id])
+    @movie = Movie.find params[:id]
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
   
   def director
-    @director = params[:director]
-    @movies = Movie.where(:director => @director)
+    @movie = Movie.find params[:id]
+    @director = @movie.director
+    if @director == ""
+      flash[:notice] = "\'#{@movie.title}\' has no director info."
+      redirect_to movies_path
+    end
+    @movies = Movie.where(director: @director)
   end
 
 end

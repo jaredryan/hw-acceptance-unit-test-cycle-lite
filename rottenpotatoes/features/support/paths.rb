@@ -22,12 +22,16 @@ module NavigationHelpers
     #     user_profile_path(User.find_by_login($1))
     
     when /the edit page for "(.*)"$/
-      @movie = Movie.find_by :title => $1
-      edit_movie_path(@movie.id)
+      movie = Movie.find_by :title => $1
+      edit_movie_path(movie)
 
-    when /the details page for "(.*)"$/ then movie_path($1)
-      @movie = Movie.find_by :title => $1
-      movie_path(@movie.id)
+    when /the details page for "(.*)"$/
+      movie = Movie.find_by :title => $1
+      movie_path(movie)
+
+    when /the Similar Movies page for "(.*)"$/
+      movie = Movie.find_by :title => $1
+      director_path(movie)
 
     else
       begin
